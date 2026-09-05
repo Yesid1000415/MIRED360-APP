@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>MIRED360 APP</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo">M</span><div><b>MIRED360</b><small>APP</small></div></div>
+  <span>Conectamos soluciones.</span>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">INTERNET CLARO PARA TU HOGAR</div>
+  <h1>Encuentra el plan ideal<br>para tu hogar</h1>
+  <p>Consulta las opciones disponibles y valida primero la cobertura en tu dirección.</p>
+  <a class="primary" href="#planes">Ver planes</a>
+</section>
+
+<section class="coverage">
+  <div><b>📍 ¿Ya sabes qué plan quieres?</b><small>Valida cobertura antes de solicitar la instalación.</small></div>
+  <a class="cyan" href="https://wa.me/573229432085?text=Hola%20MIRED360,%20quiero%20validar%20cobertura%20de%20Internet." target="_blank">VALIDAR COBERTURA</a>
+</section>
+
+<section id="planes" class="section">
+  <div class="eyebrow">PLANES</div>
+  <h2>Elige según lo que necesitas</h2>
+  <div class="filters">
+    <button class="active" data-filter="all">Todos</button>
+    <button data-filter="internet">Solo Internet</button>
+    <button data-filter="tv">Internet + TV</button>
+    <button data-filter="triple">TV + Voz</button>
+  </div>
+  <div id="cards" class="cards"></div>
+  <p class="note"><b>Importante:</b> la tecnología se confirma únicamente después de validar cobertura. En HFC el plan de $65.900 corresponde a 300 Mb y los demás planes a 500 Mb. En fibra, los demás planes aplican con 900 Mb según cobertura y condiciones vigentes.</p>
+</section>
+</main>
+
+<div id="installBar" class="installbar hidden">
+  <span>📲 Instala MIRED360 en tu celular</span>
+  <button id="installBtn">Instalar APP</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
