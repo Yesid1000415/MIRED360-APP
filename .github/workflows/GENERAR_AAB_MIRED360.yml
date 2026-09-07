@@ -1,4 +1,4 @@
-name: Generar AAB MIRED360
+name: Generador AAB MIRED360 COMPLETO
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar proyecto
+      - name: Descargar repositorio
         uses: actions/checkout@v4
 
       - name: Configurar Java 17
@@ -28,14 +28,316 @@ jobs:
         with:
           gradle-version: '9.6.0'
 
-      - name: Crear clave de carga para Google Play
+      - name: Crear proyecto Android completo
+        shell: bash
+        run: |
+          rm -rf app
+          mkdir -p app/src/main/java/com/mired360servicios/app
+          mkdir -p app/src/main/res/values
+          mkdir -p app/src/main/res/drawable
+
+          cat > settings.gradle <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+
+          rootProject.name = 'MIRED360APP'
+          include ':app'
+          EOF
+
+          cat > build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application' version '9.4.0' apply false
+          }
+          EOF
+
+          cat > gradle.properties <<'EOF'
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          android.useAndroidX=true
+          EOF
+
+          cat > app/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+
+          android {
+              namespace 'com.mired360servicios.app'
+              compileSdk 36
+
+              defaultConfig {
+                  applicationId 'com.mired360servicios.app'
+                  minSdk 24
+                  targetSdk 36
+                  versionCode 1
+                  versionName '1.0.0'
+              }
+
+              signingConfigs {
+                  release {
+                      if (project.hasProperty('MIRED360_STORE_FILE')) {
+                          storeFile file(project.property('MIRED360_STORE_FILE'))
+                          storePassword project.property('MIRED360_STORE_PASSWORD')
+                          keyAlias project.property('MIRED360_KEY_ALIAS')
+                          keyPassword project.property('MIRED360_KEY_PASSWORD')
+                      }
+                  }
+              }
+
+              buildTypes {
+                  release {
+                      minifyEnabled false
+                      shrinkResources false
+                      if (project.hasProperty('MIRED360_STORE_FILE')) {
+                          signingConfig signingConfigs.release
+                      }
+                  }
+              }
+          }
+          EOF
+
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+              <application
+                  android:allowBackup="false"
+                  android:usesCleartextTraffic="false"
+                  android:label="MIRED360 APP"
+                  android:icon="@drawable/ic_launcher"
+                  android:roundIcon="@drawable/ic_launcher"
+                  android:theme="@style/AppTheme">
+
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true"
+                      android:screenOrientation="portrait">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+
+          cat > app/src/main/res/values/styles.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+                  <item name="android:fontFamily">sans</item>
+                  <item name="android:windowLightStatusBar">false</item>
+                  <item name="android:statusBarColor">#071A33</item>
+                  <item name="android:navigationBarColor">#071A33</item>
+                  <item name="android:colorAccent">#E31B23</item>
+              </style>
+          </resources>
+          EOF
+
+          if [ -f icon-512.png ]; then
+            cp icon-512.png app/src/main/res/drawable/ic_launcher.png
+          elif [ -f icono-512.png ]; then
+            cp icono-512.png app/src/main/res/drawable/ic_launcher.png
+          else
+            python3 - <<'PY'
+          from PIL import Image, ImageDraw
+          img = Image.new("RGB", (512, 512), "#071A33")
+          d = ImageDraw.Draw(img)
+          d.rectangle((70,70,442,442), outline="white", width=18)
+          d.text((115,220), "MIRED360", fill="white")
+          img.save("app/src/main/res/drawable/ic_launcher.png")
+          PY
+          fi
+
+          cat > app/src/main/java/com/mired360servicios/app/MainActivity.java <<'EOF'
+          package com.mired360servicios.app;
+
+          import android.app.Activity;
+          import android.content.ActivityNotFoundException;
+          import android.content.Intent;
+          import android.graphics.Color;
+          import android.net.Uri;
+          import android.os.Bundle;
+          import android.view.Gravity;
+          import android.view.View;
+          import android.webkit.WebResourceError;
+          import android.webkit.WebResourceRequest;
+          import android.webkit.WebSettings;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          import android.widget.FrameLayout;
+          import android.widget.LinearLayout;
+          import android.widget.TextView;
+
+          public class MainActivity extends Activity {
+              private static final String HOME_URL =
+                      "https://yesid1000415.github.io/MIRED360-APP/?app=android&v=1";
+
+              private WebView webView;
+              private LinearLayout errorView;
+
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  buildUi();
+                  configureWebView();
+                  webView.loadUrl(HOME_URL);
+              }
+
+              private void buildUi() {
+                  FrameLayout root = new FrameLayout(this);
+                  root.setBackgroundColor(Color.rgb(7, 26, 51));
+
+                  webView = new WebView(this);
+                  root.addView(webView, new FrameLayout.LayoutParams(
+                          FrameLayout.LayoutParams.MATCH_PARENT,
+                          FrameLayout.LayoutParams.MATCH_PARENT));
+
+                  errorView = new LinearLayout(this);
+                  errorView.setOrientation(LinearLayout.VERTICAL);
+                  errorView.setGravity(Gravity.CENTER);
+                  errorView.setPadding(48, 48, 48, 48);
+                  errorView.setBackgroundColor(Color.rgb(7, 26, 51));
+                  errorView.setVisibility(View.GONE);
+
+                  TextView title = new TextView(this);
+                  title.setText("MIRED360 APP");
+                  title.setTextColor(Color.WHITE);
+                  title.setTextSize(25);
+                  title.setGravity(Gravity.CENTER);
+
+                  TextView message = new TextView(this);
+                  message.setText("No pudimos conectarnos. Revisa tu conexión a Internet y toca aquí para volver a intentar.");
+                  message.setTextColor(Color.WHITE);
+                  message.setTextSize(16);
+                  message.setGravity(Gravity.CENTER);
+                  message.setPadding(0, 28, 0, 28);
+                  message.setOnClickListener(v -> retry());
+
+                  errorView.addView(title);
+                  errorView.addView(message);
+                  root.addView(errorView, new FrameLayout.LayoutParams(
+                          FrameLayout.LayoutParams.MATCH_PARENT,
+                          FrameLayout.LayoutParams.MATCH_PARENT));
+
+                  setContentView(root);
+              }
+
+              private void configureWebView() {
+                  WebSettings settings = webView.getSettings();
+                  settings.setJavaScriptEnabled(true);
+                  settings.setDomStorageEnabled(true);
+                  settings.setDatabaseEnabled(true);
+                  settings.setLoadWithOverviewMode(true);
+                  settings.setUseWideViewPort(true);
+                  settings.setBuiltInZoomControls(false);
+                  settings.setDisplayZoomControls(false);
+                  settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+                  settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+
+                  webView.setBackgroundColor(Color.rgb(7, 26, 51));
+                  webView.setWebViewClient(new WebViewClient() {
+                      @Override
+                      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                          return handleUrl(request.getUrl().toString());
+                      }
+
+                      @Override
+                      public void onPageFinished(WebView view, String url) {
+                          errorView.setVisibility(View.GONE);
+                          webView.setVisibility(View.VISIBLE);
+                      }
+
+                      @Override
+                      public void onReceivedError(
+                              WebView view,
+                              WebResourceRequest request,
+                              WebResourceError error) {
+                          if (request.isForMainFrame()) showError();
+                      }
+                  });
+              }
+
+              private boolean handleUrl(String url) {
+                  Uri uri = Uri.parse(url);
+                  String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase();
+                  String host = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
+
+                  if (("https".equals(scheme) || "http".equals(scheme)) &&
+                          (host.equals("yesid1000415.github.io") ||
+                           host.endsWith("mired360servicios.com"))) {
+                      return false;
+                  }
+
+                  try {
+                      startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                      return true;
+                  } catch (ActivityNotFoundException ex) {
+                      return false;
+                  }
+              }
+
+              private void showError() {
+                  webView.setVisibility(View.GONE);
+                  errorView.setVisibility(View.VISIBLE);
+              }
+
+              private void retry() {
+                  errorView.setVisibility(View.GONE);
+                  webView.setVisibility(View.VISIBLE);
+                  webView.reload();
+              }
+
+              @Override
+              public void onBackPressed() {
+                  if (webView.canGoBack()) {
+                      webView.goBack();
+                  } else {
+                      super.onBackPressed();
+                  }
+              }
+
+              @Override
+              protected void onDestroy() {
+                  if (webView != null) {
+                      webView.stopLoading();
+                      webView.destroy();
+                  }
+                  super.onDestroy();
+              }
+          }
+          EOF
+
+      - name: Crear clave de carga
         shell: bash
         run: |
           PASS=$(openssl rand -hex 16)
           echo "MIRED360_STORE_PASSWORD=$PASS" >> "$GITHUB_ENV"
           echo "MIRED360_KEY_PASSWORD=$PASS" >> "$GITHUB_ENV"
 
-          keytool -genkeypair -v             -keystore "$GITHUB_WORKSPACE/mired360-upload-key.jks"             -alias mired360upload             -keyalg RSA             -keysize 4096             -validity 10000             -storepass "$PASS"             -keypass "$PASS"             -dname "CN=MIRED360SERVICIOS, OU=MIRED360, O=MIRED360SERVICIOS, L=Madrid, ST=Cundinamarca, C=CO"
+          keytool -genkeypair -v \
+            -keystore "$GITHUB_WORKSPACE/mired360-upload-key.jks" \
+            -alias mired360upload \
+            -keyalg RSA \
+            -keysize 4096 \
+            -validity 10000 \
+            -storepass "$PASS" \
+            -keypass "$PASS" \
+            -dname "CN=MIRED360SERVICIOS, OU=MIRED360, O=MIRED360SERVICIOS, L=Madrid, ST=Cundinamarca, C=CO"
 
           {
             echo "MIRED360 APP - CLAVE DE CARGA GOOGLE PLAY"
@@ -48,9 +350,13 @@ jobs:
 
       - name: Compilar AAB firmado
         run: |
-          gradle :app:bundleRelease             -PMIRED360_STORE_FILE="$GITHUB_WORKSPACE/mired360-upload-key.jks"             -PMIRED360_STORE_PASSWORD="$MIRED360_STORE_PASSWORD"             -PMIRED360_KEY_ALIAS="mired360upload"             -PMIRED360_KEY_PASSWORD="$MIRED360_KEY_PASSWORD"
+          gradle :app:bundleRelease \
+            -PMIRED360_STORE_FILE="$GITHUB_WORKSPACE/mired360-upload-key.jks" \
+            -PMIRED360_STORE_PASSWORD="$MIRED360_STORE_PASSWORD" \
+            -PMIRED360_KEY_ALIAS="mired360upload" \
+            -PMIRED360_KEY_PASSWORD="$MIRED360_KEY_PASSWORD"
 
-      - name: Preparar archivo final
+      - name: Preparar archivos finales
         run: |
           cp app/build/outputs/bundle/release/app-release.aab MIRED360_APP_v1.0.0.aab
 
@@ -63,3 +369,4 @@ jobs:
             mired360-upload-key.jks
             MIRED360_CREDENCIALES_CLAVE.txt
           retention-days: 30
+
