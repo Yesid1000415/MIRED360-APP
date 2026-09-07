@@ -1,52 +1,9 @@
 <!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<title>MIRED360 APP</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<header class="topbar">
-  <div class="brand"><span class="logo">M</span><div><b>MIRED360</b><small>APP</small></div></div>
-  <span>Conectamos soluciones.</span>
-</header>
-
-<main>
-<section class="hero">
-  <div class="eyebrow">INTERNET CLARO PARA TU HOGAR</div>
-  <h1>Encuentra el plan ideal<br>para tu hogar</h1>
-  <p>Consulta las opciones disponibles y valida primero la cobertura en tu dirección.</p>
-  <a class="primary" href="#planes">Ver planes</a>
-</section>
-
-<section class="coverage">
-  <div><b>📍 ¿Ya sabes qué plan quieres?</b><small>Valida cobertura antes de solicitar la instalación.</small></div>
-  <a class="cyan" href="https://wa.me/573229432085?text=Hola%20MIRED360,%20quiero%20validar%20cobertura%20de%20Internet." target="_blank">VALIDAR COBERTURA</a>
-</section>
-
-<section id="planes" class="section">
-  <div class="eyebrow">PLANES</div>
-  <h2>Elige según lo que necesitas</h2>
-  <div class="filters">
-    <button class="active" data-filter="all">Todos</button>
-    <button data-filter="internet">Solo Internet</button>
-    <button data-filter="tv">Internet + TV</button>
-    <button data-filter="triple">TV + Voz</button>
-  </div>
-  <div id="cards" class="cards"></div>
-  <p class="note"><b>Importante:</b> la tecnología se confirma únicamente después de validar cobertura. En HFC el plan de $65.900 corresponde a 300 Mb y los demás planes a 500 Mb. En fibra, los demás planes aplican con 900 Mb según cobertura y condiciones vigentes.</p>
-</section>
-</main>
-
-<div id="installBar" class="installbar hidden">
-  <span>📲 Instala MIRED360 en tu celular</span>
-  <button id="installBtn">Instalar APP</button>
-</div>
-
-<script src="app.js"></script>
-</body>
-</html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071a33"><meta name="description" content="MIRED360 App: consulta planes Claro para el hogar y valida cobertura por WhatsApp."><title>MIRED360 App | Planes Claro</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="styles.css"></head>
+<body><header class="topbar"><div class="brand"><img src="icon-192.png" alt="MIRED360"><div><b>MIRED<span>360</span></b><small>APP</small></div></div><div class="claro-pill"><span>Planes de</span><strong>Claro</strong></div></header>
+<main><section class="hero"><div class="hero-copy"><div class="eyebrow">INTERNET PARA TU HOGAR</div><h1>Elige tu plan.<br><span>Nosotros validamos tu cobertura.</span></h1><p>Compara las opciones del catálogo y solicita la validación de tu dirección directamente por WhatsApp.</p><div class="hero-actions"><a href="#planes" class="btn primary">Ver todos los planes</a><a id="heroWa" class="btn secondary" target="_blank">Hablar por WhatsApp</a></div><div class="trust"><span>✓ Atención personalizada</span><span>✓ Planes sujetos a cobertura</span></div></div><div class="hero-card"><div class="signal">⌁</div><div><span>MIRED360</span><strong>Internet Claro</strong><small>Consulta • Elige • Valida</small></div></div></section>
+<section class="quick"><div><b>¿Cómo funciona?</b><small>3 pasos para solicitar tu servicio</small></div><div class="steps"><span><i>1</i> Elige</span><span><i>2</i> Valida</span><span><i>3</i> Solicita</span></div></section>
+<section id="planes" class="plans-section"><div class="section-head"><div class="eyebrow red">CATÁLOGO CLARO</div><h2>Encuentra el plan que más te conviene</h2><p>Usa los filtros para comparar más rápido.</p></div><div class="filters"><button class="active" data-filter="all">Todos</button><button data-filter="internet">Solo Internet</button><button data-filter="tv">Internet + TV</button><button data-filter="triple">TV + Voz</button></div><div id="cards" class="cards"></div>
+<div class="tech-note"><b>Importante sobre la velocidad</b><p>La tecnología se confirma después de validar la dirección. En HFC: plan base 300 Mb y demás planes 500 Mb. En Fibra Óptica: plan base 350 Mb y demás planes hasta 900 Mb, según cobertura y condiciones vigentes.</p></div></section>
+<section class="final-cta"><div><span>¿Ya viste un plan que te interesa?</span><h2>Valida tu dirección ahora</h2><p>WhatsApp recibirá el plan seleccionado y tú solo completas ciudad, barrio y dirección.</p></div><a id="footerWa" target="_blank" class="btn whatsapp">Validar por WhatsApp</a></section></main>
+<footer><b>MIRED360 APP</b><span>Gestión comercial de planes Claro. No es la aplicación oficial de Claro.</span><small>Precios, beneficios, tecnología y disponibilidad pueden variar según zona, cobertura y vigencia de la oferta.</small></footer><script src="app.js"></script></body></html>

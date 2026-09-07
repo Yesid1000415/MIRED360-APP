@@ -1,10 +1,11 @@
 {
-  "name": "MIRED360 APP",
+  "name": "MIRED360 App - Planes Claro",
   "short_name": "MIRED360",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#111827",
+  "background_color": "#071a33",
+  "theme_color": "#071a33",
+  "description": "Consulta planes Claro y valida cobertura por WhatsApp.",
   "icons": [
     {
       "src": "icon-192.png",
