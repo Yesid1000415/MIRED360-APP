@@ -1,7 +1,4 @@
-MIRED360 APP — versión visual renovada
-Identidad: azul marino + blanco + rojo.
-Catálogo: 12 ofertas Claro recuperadas del catálogo comercial.
-Flujo: elegir plan > ver detalle > validar cobertura > WhatsApp 322 943 2085.
-El plan $65.900 está incluido sin etiqueta de recomendado.
-Importante: HFC/Fibra, velocidad y disponibilidad se confirman por dirección.
-Para Google Play, esta PWA debe empaquetarse posteriormente como Android App Bundle (.AAB) firmado.
+MIRED360 APP - Versión visual final V10
+Diseño: azul marino + rojo + blanco, tarjetas compactas, Claro visible y WhatsApp por plan.
+El plan $65.900 está incluido sin etiqueta de recomendado/destacado.
+Importante: esta versión cambia el identificador de caché y desregistra versiones anteriores para evitar que el celular siga mostrando la app vieja.

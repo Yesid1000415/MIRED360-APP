@@ -1,11 +1,87 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#06172c"><title>MIRED360 APP · Planes Claro</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="styles.css"></head><body>
-<header class="topbar"><div class="brand"><img src="icon-192.png" alt="MIRED360"><div><b>MIRED<span>360</span></b><small>APP</small></div></div><div class="claro-lockup"><small>Planes de</small><strong>Claro</strong></div></header>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06192f">
+<title>MIRED360 APP · Planes Claro</title>
+<link rel="manifest" href="manifest.webmanifest?v=10">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css?v=10">
+</head>
+<body>
+<div class="app-shell">
+<header class="app-header">
+  <div class="brand-wrap">
+    <div class="brand-word">MIRED<span>360</span><small>APP</small></div>
+    <div class="brand-tagline">Tu hogar conectado,<br><b>más cerca de ti.</b></div>
+  </div>
+  <div class="claro-wrap"><small>Planes de Internet</small><div class="claro-orb">Claro<span>✦</span></div></div>
+</header>
+
 <main>
-<section id="inicio" class="hero"><div class="hero-copy"><div class="eyebrow">INTERNET HOGAR · TV · VOZ</div><h1>Conecta lo que<br><span>más te importa.</span></h1><p>Consulta planes Claro para tu hogar y valida disponibilidad en tu dirección con MIRED360.</p><a class="cta red" href="#planes">Ver planes disponibles <b>→</b></a><div class="hero-icons"><span>◉<small>Internet<br>rápido</small></span><span>▣<small>TV y<br>entretenimiento</small></span><span>◌<small>Asesoría<br>personalizada</small></span></div></div><div class="hero-art"><img src="assets/plans/plan-5.webp" alt="Internet Claro"><div class="claro-bubble">Claro</div></div></section>
-<section class="chooser"><h2>¿Qué estás buscando?</h2><p>Selecciona una opción para ver los planes que mejor se adapten a ti.</p><div class="choice-grid"><button data-jump="internet"><i>⌁</i><b>Solo Internet</b><span>›</span></button><button data-jump="tv"><i>▣</i><b>Internet + TV</b><span>›</span></button><button data-jump="triple"><i>⌂</i><b>TV + Voz</b><span>›</span></button><a id="heroWa"><i>◉</i><b>Ayuda por WhatsApp</b><span>›</span></a></div><div class="quality"><span>Con la calidad de</span><strong>Claro</strong><span>y el servicio de <b>MIRED360</b></span></div></section>
-<section id="planes" class="plans-section"><div class="section-head"><span>PLANES CLARO</span><h2>Elige tu plan</h2><p>La disponibilidad, velocidad y tecnología se confirman al validar tu dirección.</p></div><div class="filters"><button class="active" data-filter="all">Todos</button><button data-filter="internet">Solo Internet</button><button data-filter="tv">Internet + TV</button><button data-filter="triple">TV + Voz</button></div><div id="cards" class="cards"></div><div class="tech-note"><b>ⓘ Antes de contratar</b><p>La tecnología (HFC o Fibra) y la velocidad aplicable dependen de la cobertura de tu dirección. MIRED360 la valida antes de continuar la solicitud.</p></div></section>
-<section id="ayuda" class="final-cta"><div><span>¿YA ELEGISTE?</span><h2>Nosotros validamos tu cobertura.</h2><p>Envíanos ciudad, barrio y dirección por WhatsApp.</p></div><a id="footerWa" class="cta whatsapp" target="_blank">WhatsApp</a></section>
+<section id="inicio" class="hero-screen">
+  <div class="hero-copy">
+    <span class="kicker">INTERNET HOGAR · TV · VOZ</span>
+    <h1>Conecta lo que<br><em>más te importa.</em></h1>
+    <p>Explora los planes Claro disponibles y solicita la validación de cobertura directamente por WhatsApp.</p>
+    <a href="#planes" class="primary-btn">Ver planes disponibles <span>→</span></a>
+    <div class="hero-benefits">
+      <div><b>◉</b><span>Internet<br>para tu hogar</span></div>
+      <div><b>▣</b><span>TV y<br>entretenimiento</span></div>
+      <div><b>◌</b><span>Asesoría<br>personalizada</span></div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="assets/plans/plan-5.webp" alt="Internet Claro para el hogar">
+    <div class="hero-photo-shade"></div>
+    <div class="hero-claro">Claro<span>✦</span></div>
+  </div>
+</section>
+
+<section class="quick-panel">
+  <div class="quick-title"><h2>¿Qué estás buscando?</h2><p>Elige una categoría para ver los planes.</p></div>
+  <div class="quick-grid">
+    <button data-jump="internet"><i>⌁</i><span><b>Solo Internet</b><small>Planes de conectividad</small></span><strong>›</strong></button>
+    <button data-jump="tv"><i>▣</i><span><b>Internet + TV</b><small>Con entretenimiento</small></span><strong>›</strong></button>
+    <button data-jump="triple"><i>⌂</i><span><b>Internet + TV + Voz</b><small>Solución completa</small></span><strong>›</strong></button>
+    <a id="genericWa" target="_blank"><i>◉</i><span><b>Hablar por WhatsApp</b><small>Validación de cobertura</small></span><strong>›</strong></a>
+  </div>
+  <div class="brand-assurance"><span>Con la calidad de</span><div class="mini-claro">Claro</div><span>y la asesoría de <b>MIRED360</b></span></div>
+</section>
+
+<section id="planes" class="plans-screen">
+  <div class="screen-title"><span>PLANES CLARO</span><h2>Encuentra el plan para ti</h2><p>La tecnología, velocidad y disponibilidad se confirman únicamente después de validar la dirección.</p></div>
+  <div class="filters" role="tablist">
+    <button class="active" data-filter="all">Todos</button>
+    <button data-filter="internet">Solo Internet</button>
+    <button data-filter="tv">Internet + TV</button>
+    <button data-filter="triple">TV + Voz</button>
+  </div>
+  <div id="cards" class="cards"></div>
+  <div class="coverage-note"><b>ⓘ Importante</b><span>HFC o Fibra se confirma según cobertura. No asumimos tecnología antes de validar tu dirección.</span></div>
+</section>
+
+<section id="ayuda" class="support-card">
+  <div><span>¿YA ELEGISTE TU PLAN?</span><h2>Nosotros validamos tu cobertura.</h2><p>El mensaje de WhatsApp llevará el plan que elegiste y te pedirá ciudad, barrio y dirección.</p></div>
+  <a id="footerWa" class="whatsapp-btn" target="_blank">Validar por WhatsApp</a>
+</section>
 </main>
-<nav class="bottom-nav"><a href="#inicio" class="active"><b>⌂</b><span>Inicio</span></a><a href="#planes"><b>▤</b><span>Planes</span></a><a id="navWa" href="#ayuda"><b>◉</b><span>WhatsApp</span></a><a href="#ayuda"><b>?</b><span>Ayuda</span></a></nav>
-<div id="planModal" class="modal" aria-hidden="true"><div class="modal-card"><button class="close" aria-label="Cerrar">×</button><div id="modalContent"></div></div></div>
-<script src="app.js"></script></body></html>
+
+<nav class="bottom-nav">
+  <a href="#inicio" class="active"><b>⌂</b><span>Inicio</span></a>
+  <a href="#planes"><b>▤</b><span>Planes</span></a>
+  <a id="navWhatsapp" href="#ayuda"><b>◉</b><span>WhatsApp</span></a>
+  <a href="#ayuda"><b>?</b><span>Ayuda</span></a>
+</nav>
+</div>
+
+<div id="planModal" class="modal" aria-hidden="true">
+  <div class="modal-sheet">
+    <button class="modal-close" aria-label="Cerrar">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+<script src="app.js?v=10"></script>
+</body>
+</html>
