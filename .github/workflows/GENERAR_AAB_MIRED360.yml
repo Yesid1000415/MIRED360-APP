@@ -1,0 +1,65 @@
+name: Generar AAB MIRED360
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar Android SDK 36
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Configurar Gradle 9.6.0
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.6.0'
+
+      - name: Crear clave de carga para Google Play
+        shell: bash
+        run: |
+          PASS=$(openssl rand -hex 16)
+          echo "MIRED360_STORE_PASSWORD=$PASS" >> "$GITHUB_ENV"
+          echo "MIRED360_KEY_PASSWORD=$PASS" >> "$GITHUB_ENV"
+
+          keytool -genkeypair -v             -keystore "$GITHUB_WORKSPACE/mired360-upload-key.jks"             -alias mired360upload             -keyalg RSA             -keysize 4096             -validity 10000             -storepass "$PASS"             -keypass "$PASS"             -dname "CN=MIRED360SERVICIOS, OU=MIRED360, O=MIRED360SERVICIOS, L=Madrid, ST=Cundinamarca, C=CO"
+
+          {
+            echo "MIRED360 APP - CLAVE DE CARGA GOOGLE PLAY"
+            echo "Archivo: mired360-upload-key.jks"
+            echo "Alias: mired360upload"
+            echo "Contraseña del almacén: $PASS"
+            echo "Contraseña de la clave: $PASS"
+            echo "IMPORTANTE: conserva este archivo y estas credenciales para futuras actualizaciones."
+          } > "$GITHUB_WORKSPACE/MIRED360_CREDENCIALES_CLAVE.txt"
+
+      - name: Compilar AAB firmado
+        run: |
+          gradle :app:bundleRelease             -PMIRED360_STORE_FILE="$GITHUB_WORKSPACE/mired360-upload-key.jks"             -PMIRED360_STORE_PASSWORD="$MIRED360_STORE_PASSWORD"             -PMIRED360_KEY_ALIAS="mired360upload"             -PMIRED360_KEY_PASSWORD="$MIRED360_KEY_PASSWORD"
+
+      - name: Preparar archivo final
+        run: |
+          cp app/build/outputs/bundle/release/app-release.aab MIRED360_APP_v1.0.0.aab
+
+      - name: Guardar archivos para descargar
+        uses: actions/upload-artifact@v4
+        with:
+          name: MIRED360-Google-Play
+          path: |
+            MIRED360_APP_v1.0.0.aab
+            mired360-upload-key.jks
+            MIRED360_CREDENCIALES_CLAVE.txt
+          retention-days: 30
